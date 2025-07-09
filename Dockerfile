@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM arm64v8/ubuntu:latest
 
 # Set timezone to Asia/Shanghai
 RUN apt-get update && apt-get install -y tzdata && \
