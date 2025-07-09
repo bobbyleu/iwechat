@@ -33,5 +33,5 @@ jobs:
           platforms: linux/arm64  # 多架构支持（ARM64）
           push: true  # 推送到 Docker Hub
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/iwechat-arm:latest  # 镜像标签
-            ${{ secrets.DOCKERHUB_USERNAME }}/iwechat-arm:${{ github.sha }}  # 提交 SHA 作为标签
+            ${{ secrets.DOCKERHUB_USERNAME }}/iwechat:latest  # 镜像标签
+            ${{ secrets.DOCKERHUB_USERNAME }}/iwechat:${{ github.sha }}  # 提交 SHA 作为标签
