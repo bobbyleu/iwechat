@@ -6,7 +6,23 @@ RUN apt-get update && apt-get install -y tzdata && \
     dpkg-reconfigure -f noninteractive tzdata
 
 # Install curl, ca-certificates, redis, supervisor and mariadb-server-10.6
-RUN apt-get update && apt-get install -y curl ca-certificates redis-server supervisor mariadb-server-10.6
+# 使用阿里云镜像源并添加重试机制
+RUN echo "Acquire::Retries \"3\";" > /etc/apt/apt.conf.d/80-retries && \
+    echo "Acquire::http::Timeout \"30\";" >> /etc/apt/apt.conf.d/80-retries && \
+    sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        ca-certificates \
+        redis-server \
+        supervisor && \
+    # 单独安装 MariaDB（如果有问题）
+    apt-get install -y --no-install-recommends software-properties-common && \
+    apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' && \
+    add-apt-repository 'deb [arch=arm64] http://mirrors.aliyun.com/mariadb/repo/10.6/ubuntu jammy main' && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends mariadb-server-10.6 && \
+    rm -rf /var/lib/apt/lists/* \
 
 # 创建 supervisor 配置目录
 RUN mkdir -p /etc/supervisor/conf.d
