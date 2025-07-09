@@ -33,5 +33,5 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/iwechat:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/iwechat:${{ github.sha }}
+            xngleu/iwechat:latest
+            xngleu/iwechat:${{ github.sha }}
