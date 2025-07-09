@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # 触发条件：推送到 main 分支时
+      - master  # 触发条件：推送到 main 分支时
 
 jobs:
   build-and-push:
